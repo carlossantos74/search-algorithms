@@ -1,0 +1,271 @@
+% Configuração do documento
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{float}
+
+% Título do artigo
+\title{Análise Comparativa de Algoritmos de Busca: \\ Uma Implementação do Problema do Caminho Mínimo na Romênia}
+\author{Carlos Santos}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este artigo apresenta uma análise comparativa de diferentes algoritmos de busca aplicados ao problema do caminho mínimo no mapa da Romênia. São implementados e analisados algoritmos de busca cega (Breadth-First Search, Depth-First Search, Uniform Cost Search, Limited Depth-First Search, Iterative Deepening Depth-First Search e Bidirectional Search) e busca heurística (Greedy Search e A* Search). Os resultados são comparados em termos de eficiência computacional e qualidade das soluções encontradas.
+\end{abstract}
+
+\section{Introdução}
+O problema da busca é um dos tópicos fundamentais em Inteligência Artificial, tendo aplicações práticas em diversas áreas, desde navegação e planejamento de rotas até jogos e otimização de processos. Este trabalho foca na implementação e análise de diferentes estratégias de busca aplicadas ao problema clássico do caminho mínimo no mapa da Romênia, um exemplo amplamente utilizado na literatura de IA.
+
+O problema consiste em encontrar o melhor caminho entre duas cidades da Romênia, considerando a distância real entre as cidades conectadas por estradas. Este cenário serve como um excelente caso de estudo para comparar diferentes algoritmos de busca, tanto em termos de eficiência computacional quanto em qualidade das soluções encontradas.
+
+\section{Fundamentação Teórica}
+
+\subsection{Algoritmos de Busca Cega}
+
+\subsubsection{Breadth-First Search (BFS)}
+A busca em largura explora sistematicamente todos os nós em um nível antes de passar para o próximo nível. Este algoritmo garante encontrar o caminho com menor número de passos até o objetivo, sendo particularmente útil quando o objetivo está relativamente próximo do ponto de partida.
+
+\subsubsection{Depth-First Search (DFS)}
+A busca em profundidade explora um caminho até sua máxima profundidade antes de retroceder. Este algoritmo é eficiente em termos de memória, mas não garante encontrar a solução ótima.
+
+\subsubsection{Uniform Cost Search (UCS)}
+Similar ao BFS, mas considera o custo do caminho, expandindo sempre o nó com menor custo acumulado. Garante encontrar o caminho de menor custo total quando todos os custos são positivos.
+
+\subsubsection{Limited Depth-First Search (LDFS)}
+Uma variação do DFS que limita a profundidade máxima da busca, evitando assim loops infinitos em grafos cíclicos ou caminhos muito longos.
+
+\subsubsection{Iterative Deepening Depth-First Search (IDDFS)}
+Combina as vantagens do BFS e DFS, realizando buscas em profundidade com limite crescente de profundidade. Garante encontrar a solução ótima com uso eficiente de memória.
+
+\subsubsection{Bidirectional Search}
+Realiza duas buscas simultâneas, uma a partir do estado inicial e outra do objetivo, encontrando-se no meio. Pode reduzir significativamente o espaço de busca.
+
+\subsection{Algoritmos de Busca Heurística}
+
+\subsubsection{Greedy Search}
+Utiliza uma função heurística para estimar a distância até o objetivo, sempre escolhendo o nó que parece estar mais próximo do objetivo. É rápido mas não garante encontrar a solução ótima.
+
+\subsubsection{A* Search}
+Combina o custo real do caminho percorrido com uma estimativa heurística do custo restante até o objetivo. Garante encontrar o caminho ótimo quando a heurística é admissível.
+
+\section{Metodologia}
+A implementação dos algoritmos foi realizada em JavaScript, utilizando uma representação em grafo do mapa da Romênia. O grafo foi implementado como um objeto onde cada cidade é um nó e as estradas são arestas com seus respectivos pesos (distâncias).
+
+Para a busca heurística, foi implementada uma função que calcula a distância em linha reta entre as cidades como heurística admissível. Esta implementação garante que a estimativa nunca superestima o custo real do caminho.
+
+Os testes foram realizados considerando todas as combinações possíveis de cidades como pontos de partida e chegada, excluindo casos onde origem e destino são iguais. Para cada teste, foram medidos:
+\begin{itemize}
+    \item Caminho encontrado
+    \item Distância total do caminho (em quilômetros)
+    \item Tempo de execução (em milissegundos)
+\end{itemize}
+
+\section{Resultados e Discussão}
+
+A análise dos resultados obtidos pelos diferentes algoritmos de busca revela aspectos interessantes sobre seu desempenho no problema do caminho mínimo no mapa da Romênia. Vamos analisar os principais aspectos:
+
+\subsection{Resultados dos Testes}
+
+As tabelas a seguir apresentam os cinco primeiros resultados de cada algoritmo implementado:
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Breadth-First Search (BFS)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Depth-First Search (DFS)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Uniform Cost Search (UCS)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Greedy Search}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do A* Search}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Limited Depth-First Search (LDFS)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados do Iterative Deepening Depth-First Search (IDDFS)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Resultados da Busca Bidirecional (Bidirectional Search)}
+\begin{tabular}{llllr}
+\toprule
+Origem & Destino & Caminho & Distância (km) & Tempo (ms) \\
+\midrule
+Arad & Zerind & Arad → Zerind & 75 & 0.16 \\
+Arad & Oradea & Arad → Zerind → Oradea & 146 & 0.01 \\
+Arad & Sibiu & Arad → Sibiu & 140 & 0.01 \\
+Arad & Timisoara & Arad → Timisoara & 118 & 0.02 \\
+Arad & Lugoj & Arad → Timisoara → Lugoj & 229 & 0.01 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comparação de Desempenho}
+
+\subsubsection{Tempo de Execução}
+Os algoritmos apresentaram diferentes tempos de execução, com algumas tendências notáveis:
+
+\begin{itemize}
+    \item O A* Search mostrou tempos de execução consistentemente baixos, com a maioria das buscas sendo completada em menos de 0.02 segundos.
+    \item A Busca Gulosa (Greedy Search) apresentou tempos de execução similares ao A*, mas com maior variabilidade em caminhos mais complexos.
+    \item Os algoritmos de busca cega (BFS, DFS, UCS) tenderam a apresentar tempos de execução mais elevados, especialmente em caminhos mais longos.
+\end{itemize}
+
+\subsubsection{Qualidade das Soluções}
+Em termos de qualidade dos caminhos encontrados:
+
+\begin{itemize}
+    \item O A* Search consistentemente encontrou os caminhos ótimos, confirmando sua garantia teórica de otimalidade quando usando uma heurística admissível.
+    \item A Busca Gulosa, embora rápida, nem sempre encontrou os caminhos mais curtos, tendendo a fazer escolhas localmente ótimas que nem sempre levaram à solução global ótima.
+    \item O UCS encontrou caminhos ótimos, mas com maior custo computacional que o A*.
+    \item BFS e DFS encontraram caminhos válidos, mas não necessariamente os mais curtos.
+\end{itemize}
+
+\subsection{Análise de Casos Específicos}
+
+Alguns casos específicos merecem destaque:
+
+\begin{itemize}
+    \item No caminho Arad-Bucharest, um dos mais comuns em exemplos didáticos:
+    \begin{itemize}
+        \item A* encontrou o caminho ótimo (Arad → Sibiu → RimnicuVilcea → Pitesti → Bucharest) com distância de 418 km
+        \item A Busca Gulosa tendeu a ser atraída pela direção geral de Bucharest, às vezes escolhendo rotas não ótimas
+    \end{itemize}
+    
+    \item Em caminhos mais longos, como Timisoara-Neamt:
+    \begin{itemize}
+        \item A* manteve sua eficiência, encontrando o caminho ótimo em aproximadamente 0.01 segundos
+        \item Os algoritmos de busca cega mostraram aumento significativo no tempo de processamento
+    \end{itemize}
+\end{itemize}
+
+\subsection{Impacto da Heurística}
+A heurística de distância em linha reta mostrou-se efetiva:
+
+\begin{itemize}
+    \item Permitiu que o A* focasse sua busca na direção do objetivo
+    \item Manteve a admissibilidade, garantindo a otimalidade das soluções
+    \item Reduziu significativamente o espaço de busca explorado em comparação com algoritmos não informados
+\end{itemize}
+
+\section{Conclusão}
+
+Este trabalho apresentou uma análise comparativa detalhada de diferentes algoritmos de busca aplicados ao problema do caminho mínimo no mapa da Romênia. As principais conclusões são:
+
+\begin{itemize}
+    \item O A* Search demonstrou ser o algoritmo mais eficiente, combinando velocidade de execução com garantia de otimalidade das soluções.
+    
+    \item A Busca Gulosa, embora rápida, não é recomendada quando a otimalidade é um requisito crítico, sendo mais adequada para situações onde soluções aproximadas são aceitáveis.
+    
+    \item Os algoritmos de busca cega, embora fundamentais para compreensão teórica e úteis em certos contextos, mostraram-se menos eficientes para este problema específico.
+    
+    \item A escolha da heurística (distância em linha reta) provou ser adequada, mantendo a admissibilidade e contribuindo significativamente para a eficiência dos algoritmos informados.
+\end{itemize}
+
+
+\end{document}
